@@ -28,7 +28,10 @@ var fight = function (friendName) {
         } 
     }
     // remove friend's healthy by subtracting the amount in the robotAttache variable 
-    friendHealth = friendHealth - robotAttack;
+    // generate random damage value based on player's attack power
+var damage = randomNumber(robotAttack - 3, robotAttack);
+
+friendHealth = Math.max(0, friendHealth - damage);
     console.log(
         friendName + " now has " + friendHealth + "remaining"
     );
@@ -46,7 +49,9 @@ var fight = function (friendName) {
     }
 
     // Subtract the value of friendAttack from the value of robotHealth and use that result to update robotHealth variable
-    robotHealth = robotHealth - friendAttack;
+  var damage = randomNumber(friendAttack - 3, friendAttack);
+
+robotHealth = Math.max(0, robotHealth - damage);
   // Log a resulting message to the console so we know that it worked.
     console.log(
         friendName + " attacked opponent. " + robotName + " now has " + robotHealth + " remaining for health. "
@@ -66,10 +71,10 @@ var fight = function (friendName) {
 // wrap in a start game function 
 var startGame = function() { 
     // reset friend stats 
-    friendHealth = 100;
+    friendHealth = randomNumber(40, 60); 
     friendAttack = 10;
     friendMoney = 10;
-
+console.log(friendHealth);
     // fight each robot by looping over them and fighting them one at a time     
    for (var i = 0; i < friendNames.length; i++) {
       if (robotHealth > 0) {
@@ -139,7 +144,7 @@ var shop = function () {
 
             //incrase health and decrease money 
             robotHealth = robotHealth + 20;
-            robotMoney = robotMoney - 9 ;
+            robotMoney = Math.max(0, robotMoney - 9);
         } else {
             window.alert("not enough money!");
         }
@@ -168,5 +173,10 @@ var shop = function () {
     }
 };
 
+var randomNumber = function (min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value
+}
 // start first game when page loads
 startGame();
