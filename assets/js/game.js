@@ -5,25 +5,40 @@ var randomNumber = function (min, max) {
 
     return value;
 };
+
+var fightorSkip = function() {
+    // ask robot if they would like to fight or skip using this function 
+    var promptFight = window.prompt('would you like to FIGHT or SKIP this battle?');
+    
+    // conditional recursive function 
+    if (promptFight === "" || promptFight === null) {
+        window.alert("provide a valid answer");
+        return fightorSkip();
+    }
+promptFight = promptFight.toLowerCase();
+    // if robot picks skip confirm and then stop loop 
+    if (promptFight === "skip") {
+        // confirm robot wants to skip 
+        var confirmSkip = window.confirm("are you sure youd like to quit?");
+        if (confirmSkip) {
+            window.alert(robotInfo.name + " has decided to skip game, byeee");
+            robotInfo.robotMoney = robotInfo.money - 10;
+
+           // return true if player wants to leave 
+           return true;
+        }
+    }
+}
 // this creates a function 
 // fight function (now with parameter; friend's name)
 var fight = function (friend) {
     while(robotInfo.health > 0 && friend.health > 0) {
-        // ask a player if they would like to play game 
-     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-         // if robot choose to skip 
-     if (promptFight === "skip" || promptFight === "SKIP") {
-        // confirm if robot wants to skip 
-       var confirmSkip = window.confirm("you sure you want to skip? it'll cost ya!");        
-        // if yes, leave fight
-        if (confirmSkip) {
-            window.alert(robotInfo.name + " skipped game, laters ");
-            // subtract money from robot for skipping fight 
-            robotInfo.money = robotInfo.money - 10;
-            console.log("robotInfo.money", robotInfo.money);
-            break;
-        } 
-    }
+       // ask the robot if theyd like to play using fight orskip function 
+       if (fightorSkip()) {
+        // leave by breaking loop 
+        break;
+       }
+ 
     // generate random damage value based on player's attack power
 var damage = randomNumber(robotInfo.attack - 3, robotInfo.attack);
 friend.health = Math.max(0, friend.health - damage);
