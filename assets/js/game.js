@@ -32,20 +32,33 @@ promptFight = promptFight.toLowerCase();
 // this creates a function 
 // fight function (now with parameter; friend's name)
 var fight = function (friend) {
+       // keep track of who goes first 
+    var isRobotTurn = true;
+    if (Math.random() > 0.5) {
+        isRobotTurn = false;
+    }
+
     while(robotInfo.health > 0 && friend.health > 0) {
-       // ask the robot if theyd like to play using fight orskip function 
-       if (fightorSkip()) {
-        // leave by breaking loop 
+        if (isRobotTurn) {
+        // ask the robot if theyd like to play using fight orskip function 
+        if (fightorSkip()) {
+          // leave by breaking loop 
         break;
-       }
- 
+        }     
+      
     // generate random damage value based on player's attack power
-var damage = randomNumber(robotInfo.attack - 3, robotInfo.attack);
-friend.health = Math.max(0, friend.health - damage);
+        var damage = randomNumber(robotInfo.attack - 3, robotInfo.attack);
+       
+        friend.health = Math.max(0, friend.health - damage);   
+
     console.log(
-        robotInfo.name + " now has " + friend.health + "remaining"
+        robotInfo.name + 
+        " attacked . " +
+        friend.name +
+        " now has " +
+        friend.health + "remaining"
     );
-    // check friend health 
+    // check friend's health 
     if (friend.health <= 0) {
         window.alert(friend.name + ' died whomp');
 
@@ -56,12 +69,21 @@ friend.health = Math.max(0, friend.health - damage);
     } else {
         window.alert(friend.name + "still has " + friend.health + " left ");
     }
+    // robot gets attacked first 
+} else { 
     // Subtract the value of friend.attack from the value of robotInfo.health and use that result to update robotInfo.health variable
-  var damage = randomNumber(friend.attack - 3, friend.attack);
+ var damage = randomNumber(friend.attack - 3, friend.attack);
+ // remove player's healthy by subtracting the amount we set in the damage variable 
  robotInfo.health = Math.max(0, robotInfo.health - damage);
+    
   // Log a resulting message to the console so we know that it worked.
     console.log(
-        friend.name + " attacked opponent. " + robotInfo.name + " now has " + robotInfo.health + " remaining for health. "
+        friend.name + 
+        " attacked opponent. " +
+        robotInfo.name + 
+        " now has " + 
+        robotInfo.health + 
+        " remaining for health. "
     );
     // condition check robot health 
     if (robotInfo.health <= 0) {
@@ -71,6 +93,9 @@ friend.health = Math.max(0, friend.health - damage);
     } else {
         window.alert(robotInfo.name + " still in this with " + robotInfo.health + " points! ");
     }
+}
+    //switch turn order for next round 
+    isRobotTurn = !isRobotTurn;
   } // end of while loop 
 }; // end of fight function 
 
