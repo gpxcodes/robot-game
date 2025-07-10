@@ -63,7 +63,6 @@ friend.health = Math.max(0, friend.health - damage);
 var startGame = function() { 
     // reset player stats 
     robotInfo.reset();
-
     // fight each robot by looping over them and fighting them one at a time     
    for (var i = 0; i < friendInfo.length; i++) {
     if (robotInfo.health > 0) {
@@ -145,10 +144,22 @@ var shop = function () {
 /* END GAME FUNCTIONS */
 /* GAME INFORMATION / VARIABLES */
 
+var getRobotName = function () {
+    var name = "";
+
+    while (name === "" || name === null)
+ {
+    name = prompt("what would you like your robot's name to be?");
+ }
+    console.log("your robot's name is " + name);
+    return name;
+
+};
+
 // player information
 
 var robotInfo = {
-  name: window.prompt("What is your robot's name?"),
+  name: getRobotName(),
   health: 100,
   attack: 10,
   money: 10,
