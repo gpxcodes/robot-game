@@ -138,12 +138,20 @@ var startGame = function() {
 var endGame = function () {
     window.alert("the game is over, score coming up");
 
-    if (robotInfo.health > 0) {
-        window.alert("you got a score of" + robotInfo.money + " ! ");
-    } else {
-        window.alert("you've lost");
+    // check local storage for high score, if there is no high score, use 0 
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null ) {
+        highScore = 0;
     }
+    if (robotInfo.money > highScore) {
+        localStorage.setItem("highscore", robotInfo.money);
+        localStorage.setItem("name", robotInfo.name);
 
+        alert(robotInfo.name + " high score of " + robotInfo.money);
+    }
+    else {
+        alert(robotInfo.name + " did not beat the high score of: " + highScore);
+    }
     // ask if robot would like to go again 
  var playAgain = window.confirm("play again?");
     
