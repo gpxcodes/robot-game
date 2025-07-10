@@ -132,24 +132,21 @@ var endGame = function () {
 // shop offer between rounds 
 var shop = function () {
     // ask robot what they'd like to do 
-    var shopOpPrompt = window.prompt ("refill, upgrade or leave?");
-
+    var shopOpPrompt = window.prompt ("1 refill, 2 upgrade, or 3 leave?");
+    shopOpPrompt = parseInt(shopOpPrompt);
     switch (shopOpPrompt) {
-        case "refill":
-        case "REFILL": // new case ; for case sensitive values 
+        case 1: 
         robotInfo.refillHealth();
         break;
-        case "upgrade":
-        case "UPGRADE": // new case
+        case 2:
         robotInfo.upgradeAttack();
         break;
-        case "leave":
-        case "LEAVE": // new case
+        case 3:
         window.alert("leave store");
-
         // do nothing 
         break;
-        default: window.alert('not valid, try again');
+        default: 
+        window.alert('not valid, try again');
     // call shop again for valid option 
     shop();
     break;
